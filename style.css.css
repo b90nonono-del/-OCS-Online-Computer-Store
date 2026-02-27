@@ -1,0 +1,250 @@
+:root {
+    --primary-color: #f39c12;
+    --transition-speed: 0.4s;
+}
+
+body {
+    font-family: 'Prompt', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* แถบเมนูแบบโปร่งแสง */
+.custom-nav {
+    transition: var(--transition-speed);
+    padding: 1.2rem 0;
+    backdrop-filter: blur(10px); /* เอฟเฟกต์พื้นหลังเบลอ */
+}
+
+/* ส่วน Carousel เต็มหน้าจอ */
+.carousel-item {
+    height: 100vh; /* ความสูง 100% ของหน้าจอ */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* เอฟเฟกต์ค่อยๆ จางเปลี่ยนรูป */
+.carousel-fade .carousel-item {
+    transition-duration: 1.5s;
+}
+
+/* กรอบข้อความบนรูปสไลด์ */
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* ตกแต่งการ์ด */
+/* บังคับให้การ์ดมีความสูงเท่ากันทุกใบในแถว */
+.custom-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* จัดส่วนเนื้อหาข้างในการ์ด */
+.custom-card .card-body {
+    display: flex;
+    flex-direction: column; /* เรียงเนื้อหาจากบนลงล่าง */
+    flex-grow: 1;           /* ให้พื้นที่ตัวเนื้อหาขยายจนเต็ม */
+    padding: 1.5rem;
+}
+
+/* ส่วนของปุ่ม: ใช้ margin-top: auto เพื่อผลักลงล่างสุดเสมอ */
+.button-group {
+    margin-top: auto;       /* พระเอกของงาน: ผลักตัวเองลงไปล่างสุดของ card-body */
+    display: flex;
+    gap: 8px;               /* ระยะห่างระหว่าง 2 ปุ่ม */
+    padding-top: 15px;      /* เว้นระยะจากเนื้อหาด้านบนเล็กน้อย */
+}
+
+.button-group .btn {
+    flex: 1;                /* ให้ทั้ง 2 ปุ่มกว้างเท่ากันเป๊ะ */
+}
+
+.custom-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* เว้นระยะห่างเวลาคลิกเมนู */
+section {
+    scroll-margin-top: 80px;
+}
+
+.btn-primary-theme {
+    background-color: var(--primary-color) !important; /* ใช้สีทอง */
+    border-color: var(--primary-color) !important;
+    color: #fff !important; /* ตัวหนังสือสีขาวเพื่อความชัดเจน */
+    font-weight: 500;
+    transition: all var(--transition-speed) ease-in-out;
+}
+
+.btn-primary-theme:hover {
+    background-color: #d68910 !important; /* เปลี่ยนเป็นสีทองที่เข้มขึ้นเล็กน้อย */
+    border-color: #d68910 !important;
+    transform: translateY(-3px); /* ขยับขึ้นเล็กน้อย */
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3); /* เพิ่มเงาสีทอง */
+}
+
+/* --- ส่วนที่เพิ่มใหม่: หน้าต่างตะกร้าสินค้า --- */
+
+/* ปรับแต่ง Scrollbar ในถาดตะกร้าให้ดูดีขึ้น */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color); /* ใช้สีทองตามธีมเมื่อชี้ */
+}
+
+/* รูปสินค้าขนาดย่อในตะกร้า */
+.cart-item-thumb {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid #f8f9fa;
+}
+
+/* เอฟเฟกต์ขยายปุ่มชำระเงินเล็กน้อย */
+.hover-scale {
+    transition: transform 0.2s ease;
+}
+.hover-scale:hover {
+    transform: scale(1.02);
+}
+
+/* ทำให้ปุ่มปิด (X) ในส่วนหัวสีเข้มกลายเป็นสีขาว */
+.btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* ตกแต่ง Modal Login */
+#loginModal .modal-content {
+    border-radius: 20px;
+}
+#loginModal .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(243, 156, 18, 0.25);
+    border-color: var(--primary-color);
+}
+
+/* ตกแต่ง Social Login */
+.btn-outline-danger:hover { background-color: #dc3545; color: white; }
+.btn-outline-primary:hover { background-color: #0d6efd; color: white; }
+
+/* ตกแต่ง Footer ให้ดูพรีเมียมขึ้น */
+footer {
+    background: linear-gradient(180deg, #212529 0%, #000000 100%);
+    border-top: 2px solid var(--primary-color);
+}
+
+/* ตกแต่ง Toast ให้มีขอบสีทอง */
+#cartToast {
+    border-left: 5px solid var(--primary-color) !important;
+    backdrop-filter: blur(10px);
+    background-color: rgba(33, 37, 41, 0.9) !important;
+}
+
+/* ตกแต่ง Modal ชำระเงิน */
+#checkoutModal .modal-content {
+    border-top: 6px solid var(--primary-color) !important;
+}
+
+#checkoutModal h2 {
+    color: var(--primary-color) !important;
+}
+
+#checkoutModal .btn-warning {
+    transition: all 0.3s ease;
+}
+
+#checkoutModal .btn-warning:hover {
+    transform: scale(1.05);
+    background-color: #d68910 !important;
+}
+
+/* เอฟเฟกต์เด้งเบาๆ ของไอคอนสำเร็จ */
+#thankYouModal .fa-circle-check {
+    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+#thankYouModal .modal-content {
+    border-bottom: 8px solid #28a745 !important; /* ขอบล่างสีเขียว */
+}
+
+/* 3. ตกแต่งหน้าต่างรายละเอียด */
+#productDetailModal .modal-xl { max-width: 1000px; }
+#detail-desc {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 15px;
+    border-left: 4px solid var(--primary-color);
+}
+
+/* ตกแต่งระบบรีวิว */
+.star-rating i {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.star-rating i:hover {
+    transform: scale(1.2);
+}
+
+/* เมื่อดาวถูกเลือก (ผ่าน JS) */
+.star-rating .fa-solid {
+    color: var(--primary-color) !important;
+}
+
+.c-pointer {
+    cursor: pointer;
+}
+
+/* ทำให้ Modal รายละเอียดเลื่อนขึ้นลงได้ถ้าข้อมูลเยอะ */
+#productDetailModal .modal-body {
+    max-height: 85vh;
+    overflow-y: auto;
+}
+/* บังคับให้เนื้อหาในการ์ดจัดเรียงแบบยืดหยุ่น */
+.custom-card .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* ส่วนของชื่อสินค้า ให้มีพื้นที่ว่างขั้นต่ำเพื่อให้ปุ่มอยู่ระดับเดียวกัน */
+.custom-card .card-title {
+    min-height: 3rem; /* ปรับค่าตามความยาวชื่อสินค้า */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* จำกัดชื่อสินค้าไว้ไม่เกิน 2 บรรทัด */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* กลุ่มปุ่ม: บังคับให้เด้งลงไปอยู่ล่างสุดเสมอ */
+.button-group {
+    margin-top: auto; 
+    display: flex;
+    gap: 10px; /* ระยะห่างระหว่างปุ่ม */
+}
+
+.button-group .btn {
+    flex: 1; /* บังคับให้ทั้ง 2 ปุ่มมีความกว้างเท่ากัน */
+    padding: 10px 5px;
+    font-size: 0.9rem;
+}

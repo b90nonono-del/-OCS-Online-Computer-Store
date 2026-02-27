@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Computer Store</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-nav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><i class="fa-solid fa-temple text-warning me-2"></i>Online Computer Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link px-3" href="#mainHero">หน้าแรก</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#travel">คอมประกอบครบชุด</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#products">ส่วนประกอบ</a></li>
+
+                    <li class="nav-item" id="loginMenuItem">
+                        <a class="nav-link px-3 fw-bold text-warning" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fa-solid fa-right-to-bracket me-1"></i> เข้าสู่ระบบ
+                        </a>
+                    </li>
+                    <li class="nav-item d-none" id="userProfile">
+                        <span class="nav-link text-warning fw-bold px-3">
+                            <i class="fa-solid fa-circle-user me-1"></i> <span id="displayUsername"></span>
+                        </span>
+                    </li>
+
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-outline-warning position-relative rounded-pill px-4 fw-bold" data-bs-toggle="offcanvas" href="#shoppingCartOffcanvas" role="button">
+                            <i class="fa-solid fa-cart-shopping me-1"></i> ตะกร้า
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-dark">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+            <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow" style="border-radius: 20px;">
+                        <div class="modal-header bg-dark text-white">
+                            <h5 class="modal-title fw-bold"><i class="fa-solid fa-user-lock me-2 text-warning"></i>เข้าสู่ระบบเพื่อชำระเงิน</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body p-4">
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">ชื่อผู้ใช้งาน</label>
+                                    <input type="text" class="form-control rounded-pill border-warning" id="username" placeholder="กรอกชื่อผู้ใช้" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">รหัสผ่าน</label>
+                                    <input type="password" class="form-control rounded-pill border-warning" id="password" placeholder="กรอกรหัสผ่าน" required>
+                                </div>
+                                <button type="submit" class="btn btn-warning w-100 rounded-pill fw-bold mt-2 shadow-sm text-dark">
+                                    ยืนยันการเข้าสู่ระบบ
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="shoppingCartOffcanvas" aria-labelledby="shoppingCartLabel" style="z-index: 1060;">
+    <div class="offcanvas-header bg-dark text-white" style="border-bottom: 3px solid var(--primary-color);">
+        <h5 class="offcanvas-title fw-bold" id="shoppingCartLabel">
+            <i class="fa-solid fa-cart-shopping me-2 text-warning"></i>ตะกร้าของฉัน
+        </h5>
+        <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body d-flex flex-column p-0">
+        
+        <div class="cart-items-area flex-grow-1 p-3 overflow-auto custom-scrollbar">
+        </div>
+            <div class="cart-summary bg-light p-4 border-top shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
+                <div class="d-flex justify-content-between mb-2 text-muted">
+                    <span>จำนวนสินค้า:</span>
+                    <span id="total-qty">0 ชิ้น</span> </div>
+                <div class="d-flex justify-content-between mb-4 align-items-end">
+                    <span class="fs-5 fw-bold">ยอดรวม:</span>
+                    <span class="fs-4 fw-bold" id="total-price" style="color: var(--primary-color);">฿0</span> </div>
+                <button onclick="checkLoginBeforePay()" class="btn btn-warning w-100 py-2 rounded-pill fw-bold text-dark shadow-sm hover-scale">
+                    ดำเนินการชำระเงิน <i class="fa-solid fa-chevron-right ms-2"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <div id="mainHero" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#mainHero" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#mainHero" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#mainHero" data-bs-slide-to="2"></button>
+        </div>
+        
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=1920');">
+                <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
+                    <h1 class="display-1 fw-bold text-warning">THE ULTIMATE PC</h1>
+                    <p class="lead fs-3">สัมผัสประสบการณ์การเล่นเกมที่เหนือระดับด้วยคอมพิวเตอร์สเปกแรง</p>
+                    <a href="#travel" class="btn btn-warning rounded-pill px-5 py-3 fw-bold mt-3 shadow">เลือกซื้อคอมชุด</a>
+                </div>
+            </div>
+
+            <div class="carousel-item" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=1920');">
+                <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
+                    <h1 class="display-2 fw-bold">CUSTOM BUILD</h1>
+                    <p class="lead fs-3">จัดสเปกคอมพิวเตอร์ตามงบประมาณและความต้องการของคุณ</p>
+                    <a href="#products" class="btn btn-outline-warning rounded-pill px-5 py-3 fw-bold mt-3">ดูส่วนประกอบ</a>
+                </div>
+            </div>
+
+            <div class="carousel-item" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1920');">
+                <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
+                    <h1 class="display-2 fw-bold text-warning">QUALITY GUARANTEED</h1>
+                    <p class="lead fs-3">มั่นใจด้วยอุปกรณ์ลิขสิทธิ์แท้และการรับประกันจากศูนย์บริการชั้นนำ</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainHero" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainHero" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <section id="travel" class="container py-5 mt-5">
+        <h2 class="text-center fw-bold mb-5">คอมประกอบครบชุด</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+        <div class="card h-100 shadow-sm border-0 custom-card">
+            <img src="https://img.advice.co.th/images_nas/pic_product4/A0151947/A0151947OK_BIG_1.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h5 class="card-title fw-bold">RYZEN 5 5600 RX 6650XT 8GB GIGABYTE GA</h5>
+                <p class="card-text text-muted"></p>
+                <div class="button-group">
+                <button type="button" 
+                        onclick="showProductDetail('AMD RYZEN 5 5600 Set', 15900, 'https://img.advice.co.th/images_nas/pic_product4/A0151947/A0151947OK_BIG_1.jpg', 'CPU: AMD RYZEN 5 5600<br>RAM: 16GB (8GBx2) DDR4 3200MHz PNY XLR8 RGB BLACK<br>SSD: 512GB SSD M.2 PCIE 4.0 T-FORCE Z44A5 NVME<br>PSU: 650W GIGABYTE P650B (80 PLUS BRONZE)<br>CASE: TSUNAMI COOLMAN 190-5 KK 1264x3')" 
+                        class="btn btn-outline-dark w-100 rounded-pill mt-3">
+                    รายละเอียดสินค้า
+                </button>
+                <button type="button" onclick="addToCart('AMD RYZEN 5 5600 Set', 15900, 'https://img.advice.co.th/images_nas/pic_product4/A0151947/A0151947OK_BIG_1.jpg')" class="btn btn-primary-theme rounded-pill w-100">
+                    <i class="fa-solid fa-cart-plus me-2"></i> ใส่ตะกร้า
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 custom-card">
+                <img src="https://microless.com/cdn/products/e8830fb6dec828ca8e55d3e493fe40e3-md.jpg" class="card-img-top" alt="Core i9 Set">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">INTEL CORE I9-14900K RTX 4090 24GB ULTIMATE</h5>
+                    <p class="card-text text-muted">ที่สุดของความแรงเพื่อการทำงานและเล่นเกม</p>
+                    <div class="button-group">
+                    <button type="button" 
+                            onclick="showProductDetail('INTEL I9-14900K Set', 125900, 'https://microless.com/cdn/products/e8830fb6dec828ca8e55d3e493fe40e3-md.jpg', 'CPU: INTEL CORE I9-14900K<br>GPU: RTX 4090 24GB GDDR6X<br>RAM: 64GB (32GBx2) DDR5 6000MHz<br>SSD: 2TB NVMe Gen4<br>PSU: 1000W 80+ GOLD<br>CASE: LIAN LI O11 DYNAMIC')" 
+                            class="btn btn-outline-dark w-100 rounded-pill mt-3">
+                        รายละเอียดสินค้า
+                    </button>
+                    <button type="button" onclick="addToCart('INTEL I9-14900K Set', 125900, 'https://microless.com/cdn/products/e8830fb6dec828ca8e55d3e493fe40e3-md.jpg')" class="btn btn-primary-theme rounded-pill w-100 mt-2">
+                        <i class="fa-solid fa-cart-plus me-2"></i> ใส่ตะกร้า
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 custom-card">
+                <img src="img/190-1200x1200.jpg" class="card-img-top" alt="Core i3 Set">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">INTEL CORE I3-12100F GTX 1650 STARTER SET</h5>
+                    <p class="card-text text-muted">ชุดเริ่มต้น ราคาคุ้มค่า สำหรับทำงานและเรียน</p>
+                    <div class="button-group">
+                    <button type="button" 
+                            onclick="showProductDetail('INTEL I3-12100F Set', 13500, 'img/190-1200x1200.jpg', 'CPU: INTEL CORE I3-12100F<br>GPU: GTX 1650 4GB GDDR6<br>RAM: 8GB DDR4 3200MHz<br>SSD: 256GB NVMe<br>PSU: 550W 80+ WHITE<br>CASE: NEOLUTION E-SPORT')" 
+                            class="btn btn-outline-dark w-100 rounded-pill mt-3">
+                        รายละเอียดสินค้า
+                    </button>
+                    <button type="button" onclick="addToCart('INTEL I3-12100F Set', 13500, 'img/190-1200x1200.jpg')" class="btn btn-primary-theme rounded-pill w-100 mt-2">
+                        <i class="fa-solid fa-cart-plus me-2"></i> ใส่ตะกร้า
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5">ส่วนประกอบ</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+        <div class="card h-100 shadow-sm border-0 custom-card">
+            <img src="https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products151267_800.jpg" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h5 class="card-title fw-bold">RAM DDR5 16GB/32GB 5600MHz KINGSTON FURY BEAST (BLACK) (KF556C40BB)</h5>
+                <p class="card-text text-muted">CUP</p>
+                <div class="button-group">
+                <button type="button" 
+                        onclick="showProductDetail('RAM DDR5 16GB/32GB 5600MHz', 5890, 'https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products151267_800.jpg', 'Brand : Kingston <br>Model  : FURY Beast DDR5 (16GBx1)<br>Part No : KF556C40BB-16 <br>Capacity Per DIMM : 16 GB <br>Total Capacity : 16 GB <br>Speed : 5600 MHz <br>Type : DDR5 <br>Compatibility: Intel<br>Performance Profile : XMP 3.0<br>การรับประกัน : LT ')" 
+                        class="btn btn-outline-dark w-100 rounded-pill mt-3">
+                    รายละเอียดสินค้า
+                </button>
+                <button type="button" onclick="addToCart('RAM DDR5 16GB/32GB 5600MHz', 5890, 'https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products151267_800.jpg')" class="btn btn-primary-theme rounded-pill w-100">
+                    <i class="fa-solid fa-cart-plus me-2"></i> ใส่ตะกร้า
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col">
+        <div class="card h-100 shadow-sm border-0 custom-card">
+            <img src="https://www.jib.co.th/img_master/product/original/2024012210464764984_1.jpg" class="card-img-top" alt="VGA">
+            <div class="card-body text-center">
+                <h5 class="card-title fw-bold">ASUS ROG STRIX RTX 4070 Ti SUPER 16GB OC</h5>
+                <p class="card-text text-muted">VGA (การ์ดจอ)</p>
+                <div class="button-group">
+                <button type="button" 
+                        onclick="showProductDetail('ASUS ROG RTX 4070 Ti SUPER', 38500, 'https://www.jib.co.th/img_master/product/original/2024012210464764984_1.jpg', 'Brand: ASUS<br>Model: ROG Strix OC Edition<br>Memory: 16GB GDDR6X<br>Bus Interface: 256-bit<br>Warranty: 3 Years')" 
+                        class="btn btn-outline-dark w-100 rounded-pill mt-3">
+                    รายละเอียดสินค้า
+                </button>
+                <button type="button" onclick="addToCart('ASUS ROG RTX 4070 Ti SUPER', 38500, 'https://www.jib.co.th/img_master/product/original/2024012210464764984_1.jpg')" class="btn btn-primary-theme rounded-pill w-100 mt-2">
+                    <i class="fa-solid fa-cart-plus me-2"></i> ใส่ตะกร้า
+                </button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="col">
+        <div class="card h-100 shadow-sm border-0 custom-card">
+            <img src="https://down-th.img.susercontent.com/file/th-11134207-7r98u-lnuyug2mznlca2" class="card-img-top" alt="CPU">
+            <div class="card-body text-center">
+                <h5 class="card-title fw-bold">INTEL CORE I7-14700K 3.4GHz 20C/28T</h5>
+                <p class="card-text text-muted">CPU (หน่วยประมวลผล)</p>
+                <div class="button-group">
+                <button type="button" 
+                        onclick="showProductDetail('INTEL CORE I7-14700K', 16200, 'https://down-th.img.susercontent.com/file/th-11134207-7r98u-lnuyug2mznlca2', 'Core: 20 (8P + 12E)<br>Threads: 28<br>Clock Speed: 3.4 GHz (Up to 5.6 GHz)<br>Socket: LGA1700<br>Warranty: 3 Years')" 
+                        class="btn btn-outline-dark w-100 rounded-pill mt-3">
+                    รายละเอียดสินค้า
+                </button>
+                <button type="button" onclick="addToCart('INTEL CORE I7-14700K', 16200, 'https://down-th.img.susercontent.com/file/th-11134207-7r98u-lnuyug2mznlca2')" class="btn btn-primary-theme rounded-pill w-100 mt-2">
+                    <i class="fa-solid fa-cart-plus me-2"></i> ใส่ตะกร้า
+                </button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-5 text-center">
+        <p class="mb-1">จัดทำโดย: <strong>[นรงฤทธิ์]</strong></p>
+        <p class="opacity-50">สาขาคอมพิวเตอร์ธุรกิจ | วิทยาลัยเทคโนโลยีไทยอโยธยาบริหารธุรกิจ</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.custom-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-dark', 'shadow');
+            } else {
+                nav.classList.remove('bg-dark', 'shadow');
+            }
+        });
+    </script>
+
+<script>
+    window.addEventListener('scroll', function() {
+        // ... (โค้ดเดิมของคุณ) ...
+    });
+</script>
+<script>
+    // 1. ข้อมูลสินค้าในตะกร้า (คุณสามารถดึงจาก LocalStorage เพิ่มเติมได้)
+    let cart = [];
+
+    // 2. ฟังก์ชันแสดงผลตะกร้าสินค้า (Render)
+    function renderCart() {
+        const cartContainer = document.querySelector('.cart-items-area');
+        const totalQtyEl = document.getElementById('total-qty');
+        const totalPriceEl = document.getElementById('total-price');
+        const badgeEl = document.querySelector('.badge'); // เลขแดงบนปุ่มตะกร้า
+
+        cartContainer.innerHTML = ''; // ล้างรายการเก่า
+        let totalQty = 0;
+        let totalPrice = 0;
+
+        if (cart.length === 0) {
+            cartContainer.innerHTML = '<div class="text-center py-5 text-muted">ไม่มีสินค้าในตะกร้า</div>';
+        }
+
+        cart.forEach((item, index) => {
+            totalQty += item.qty;
+            totalPrice += (item.price * item.qty);
+
+            // สร้าง HTML ของสินค้าแต่ละชิ้น
+            cartContainer.innerHTML += `
+                <div class="cart-item d-flex align-items-center mb-3 pb-3 border-bottom">
+                    <img src="${item.img}" class="cart-item-thumb shadow-sm">
+                    <div class="ms-3 flex-grow-1 pe-2" style="min-width: 0;">
+                        <h6 class="mb-1 fw-bold text-truncate">${item.name}</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">จำนวน: ${item.qty}</small>
+                            <span class="fw-bold" style="color: var(--primary-color);">฿${(item.price * item.qty).toLocaleString()}</span>
+                        </div>
+                    </div>
+                    <button onclick="removeItem(${index})" class="btn btn-sm btn-outline-danger rounded-circle" style="width: 32px; height: 32px; padding: 0;">
+                        <i class="fa-solid fa-trash-can" style="font-size: 0.8rem;"></i>
+                    </button>
+                </div>`;
+        });
+
+        // อัปเดตตัวเลขสรุปผลบนหน้าจอ
+        if(totalQtyEl) totalQtyEl.innerText = totalQty + " ชิ้น";
+        if(totalPriceEl) totalPriceEl.innerText = "฿" + totalPrice.toLocaleString();
+        if(badgeEl) badgeEl.innerText = totalQty;
+    }
+
+    // 3. ฟังก์ชันลบสินค้าที่ทำงานได้จริง
+    function removeItem(index) {
+        // ลบข้อมูลออกจากอาเรย์ cart
+        cart.splice(index, 1);
+        
+        // สั่งวาดหน้าจอใหม่ทันที (ราคาจะถูกคำนวณใหม่ใน renderCart)
+        renderCart();
+    }
+    // 4. ฟังก์ชันเพิ่มสินค้าลงตะกร้า
+    function addToCart(name, price, img) {
+    // 1. ตรวจสอบและเพิ่มสินค้าลงในอาเรย์ cart (โค้ดเดิมของคุณ)
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+        existingItem.qty += 1;
+    } else {
+        cart.push({
+            name: name,
+            price: price,
+            qty: 1,
+            img: img
+        });
+    }
+
+    // 2. วาดตะกร้าใหม่
+    renderCart();
+    
+    // 3. แสดง Toast แจ้งเตือน (ขอบทองที่มุมจอ)
+    const toastLive = document.getElementById('cartToast');
+    const toast = new bootstrap.Toast(toastLive);
+    toast.show();
+
+    // --- ส่วนที่เพิ่มใหม่: สั่งปิดหน้าต่างรายละเอียดสินค้าทันที ---
+    const productDetailModalEl = document.getElementById('productDetailModal');
+    const detailModal = bootstrap.Modal.getInstance(productDetailModalEl);
+    if (detailModal) detailModal.hide();
+}
+    // --- ระบบล็อกอินและชำระเงิน ---
+let isLoggedIn = false;
+let isCheckingOut = false; // ตัวแปรใหม่เพื่อเช็คว่ามาจากปุ่มชำระเงินหรือไม่ // สถานะล็อกอินเริ่มต้นเป็น false
+
+// ฟังก์ชันเมื่อกดปุ่มล็อกอินใน Modal
+// แก้ไขส่วนล็อกอินใหม่ให้รับค่าชื่อมาแสดง
+// วางแทนที่อันเดิมที่ซ้ำกัน
+document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const userVal = document.getElementById('username').value;
+    isLoggedIn = true; 
+
+    const displayUsernameEl = document.getElementById('displayUsername');
+    const userProfileEl = document.getElementById('userProfile');
+    if(displayUsernameEl && userProfileEl) {
+        displayUsernameEl.innerText = userVal;
+        userProfileEl.classList.remove('d-none');
+    }
+
+    const loginMenuItem = document.getElementById('loginMenuItem');
+    if(loginMenuItem) loginMenuItem.classList.add('d-none');
+
+    const modalElement = document.getElementById('loginModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    if(modal) modal.hide();
+
+    alert('ยินดีต้อนรับคุณ ' + userVal + ' เข้าสู่ระบบเรียบร้อยแล้ว');
+
+    // --- ส่วนที่แก้ไขใหม่ ---
+    if (isCheckingOut) {
+        proceedToPay(); // ถ้ากดมาจากปุ่มชำระเงิน ให้เด้งหน้าจ่ายเงิน
+        isCheckingOut = false; // จ่ายเสร็จแล้วรีเซ็ตค่า
+    }
+    // ถ้าล็อกอินปกติ (isCheckingOut เป็น false) จะไม่เด้งหน้าจ่ายเงิน
+});
+// ฟังก์ชันเช็คสถานะก่อนชำระเงิน
+function checkLoginBeforePay() {
+    if (cart.length === 0) {
+        alert('ตะกร้าว่างเปล่า! กรุณาเลือกสินค้าก่อนครับ');
+        return;
+    }
+
+    if (!isLoggedIn) {
+        isCheckingOut = true; // บอกระบบว่ากดมาจากปุ่มชำระเงิน
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+    } else {
+        proceedToPay();
+    }
+}
+
+// ฟังก์ชันคำนวณเงินและจบการขาย
+// ฟังก์ชันเรียกหน้าต่างยืนยันชำระเงิน (เด้งกลางจอ)
+function proceedToPay() {
+    const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    
+    // อัปเดตยอดเงินในหน้าต่างเด้ง
+    document.getElementById('checkout-total-display').innerText = "฿" + total.toLocaleString();
+    
+    // สั่งให้หน้าต่างยืนยันเด้งขึ้นมา
+    const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+    checkoutModal.show();
+}
+
+// ฟังก์ชันกดยืนยันชำระเงินขั้นสุดท้าย
+// ฟังก์ชันกดยืนยันชำระเงินขั้นสุดท้าย (แบบอัปเดตใหม่)
+function finalizePayment() {
+    // 1. ปิดหน้าต่างยืนยันชำระเงิน (checkoutModal)
+    const checkoutModalEl = document.getElementById('checkoutModal');
+    const checkoutModal = bootstrap.Modal.getInstance(checkoutModalEl);
+    if(checkoutModal) checkoutModal.hide();
+
+    // 2. ล้างข้อมูลในตะกร้าและอัปเดตหน้าจอทันที
+    cart = [];
+    renderCart();
+    
+    // 3. ปิดถาดตะกร้าสินค้าที่ค้างอยู่ด้านข้าง
+    const offcanvasElement = document.getElementById('shoppingCartOffcanvas');
+    const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+    if(offcanvas) offcanvas.hide();
+
+    // 4. รอสักนิด (0.5 วินาที) เพื่อให้หน้าต่างเก่าปิดสนิท แล้วค่อยเด้งหน้าต่างขอบคุณ
+    setTimeout(() => {
+        const thankYouModal = new bootstrap.Modal(document.getElementById('thankYouModal'));
+        thankYouModal.show();
+    }, 500);
+}
+// 2. ฟังก์ชันเปิดหน้าต่างรายละเอียดสินค้า
+function showProductDetail(name, price, img, description) {
+    // ส่งข้อมูลเข้าหน้าต่าง
+    document.getElementById('detail-name').innerText = name;
+    document.getElementById('detail-price').innerText = "฿" + price.toLocaleString();
+    document.getElementById('detail-img').src = img;
+    document.getElementById('detail-desc').innerHTML = description;
+
+    // ตั้งค่าปุ่มใส่ตะกร้าในหน้าต่างรายละเอียด
+    const addBtn = document.getElementById('detail-add-btn');
+    addBtn.setAttribute('onclick', `addToCart('${name}', ${price}, '${img}');`);
+
+    // สั่งเด้งหน้าต่างขึ้นมา
+    const productModal = new bootstrap.Modal(document.getElementById('productDetailModal'));
+    productModal.show();
+}
+let currentRating = 0; // ตัวแปรเก็บคะแนนดาว
+
+// ฟังก์ชันสำหรับระบายสีดาวเมื่อคลิก
+function setRating(n) {
+    currentRating = n;
+    const stars = document.querySelectorAll('.star-rating i');
+    
+    stars.forEach((star, index) => {
+        if (index < n) {
+            star.classList.remove('fa-regular');
+            star.classList.add('fa-solid'); // เปลี่ยนเป็นดาวทึบสีทอง
+        } else {
+            star.classList.remove('fa-solid');
+            star.classList.add('fa-regular'); // กลับเป็นดาวเส้นขอบ
+        }
+    });
+    document.getElementById('rating-value').innerText = `(${n}/5)`;
+}
+
+// ฟังก์ชันเมื่อกดปุ่ม "ส่งรีวิวสินค้า"
+// ฟังก์ชันส่งรีวิว (เวอร์ชันอัปเกรด: เช็คชื่อคนล็อกอิน + แสดงผลทันที)
+function submitReview() {
+    // 1. เช็คว่าล็อกอินหรือยัง
+    if (!isLoggedIn) {
+        alert('กรุณาเข้าสู่ระบบก่อนทำการรีวิวครับ');
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show(); // เด้งหน้าต่าง Login ให้ทันที
+        return;
+    }
+
+    const comment = document.getElementById('review-comment').value;
+    const userName = document.getElementById('displayUsername').innerText; // ดึงชื่อที่โชว์บน Navbar
+    const reviewList = document.getElementById('review-list');
+
+    // 2. เช็คความถูกต้องของข้อมูล
+    if (currentRating === 0) {
+        alert('กรุณาเลือกคะแนนดาวก่อนครับ');
+        return;
+    }
+    if (!comment.trim()) {
+        alert('กรุณาพิมพ์ข้อความรีวิวด้วยครับ');
+        return;
+    }
+
+    // 3. ถ้าเป็นรีวิวแรก ให้ลบข้อความ "ยังไม่มีรีวิว" ออกก่อน
+    if (reviewList.innerHTML.includes('ยังไม่มีรีวิว')) {
+        reviewList.innerHTML = '';
+    }
+
+    // 4. สร้าง HTML สำหรับโชว์คอมเมนต์ใหม่
+    let starsHtml = '';
+    for (let i = 0; i < 5; i++) {
+        starsHtml += i < currentRating ? '<i class="fa-solid fa-star text-warning" style="font-size: 0.7rem;"></i>' : '<i class="fa-regular fa-star text-warning" style="font-size: 0.7rem;"></i>';
+    }
+
+    const newReview = `
+        <div class="bg-light p-3 rounded-4 mb-2 shadow-sm border-start border-warning border-4">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <strong class="small"><i class="fa-solid fa-circle-user me-1"></i> ${userName}</strong>
+                <div>${starsHtml}</div>
+            </div>
+            <p class="mb-0 small text-muted">${comment}</p>
+        </div>
+    `;
+
+    // 5. เพิ่มรีวิวใหม่เข้าไปด้านบนสุด
+    reviewList.innerHTML = newReview + reviewList.innerHTML;
+
+    // 6. แจ้งเตือนและรีเซ็ตค่า
+    alert('ส่งรีวิวเรียบร้อยแล้ว ขอบคุณครับ!');
+    document.getElementById('review-comment').value = '';
+    setRating(0);
+}
+</script>
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    <div id="cartToast" class="toast align-items-center text-white bg-dark border-0 rounded-3 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="fa-solid fa-circle-check text-warning me-2"></i> 
+                เพิ่มสินค้าลงในตะกร้าเรียบร้อยแล้ว!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 25px;">
+            <div class="modal-header bg-dark text-white text-center d-block">
+                <h5 class="modal-title fw-bold"><i class="fa-solid fa-file-invoice-dollar text-warning me-2"></i>ยืนยันการชำระเงิน</h5>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <p class="text-muted">คุณต้องการดำเนินการสั่งซื้อสินค้าทั้งหมดในตะกร้าใช่หรือไม่?</p>
+                <div class="bg-light p-3 rounded-4 mb-3">
+                    <span class="d-block small text-muted">ยอดชำระสุทธิ</span>
+                    <h2 class="fw-bold text-dark mb-0" id="checkout-total-display">฿0</h2>
+                </div>
+                <p class="small text-danger"><i class="fa-solid fa-circle-info me-1"></i>โปรดตรวจสอบรายการสินค้าก่อนยืนยัน</p>
+            </div>
+            <div class="modal-footer border-0 p-4 pt-0 gap-2">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">ยกเลิก</button>
+                <button type="button" onclick="finalizePayment()" class="btn btn-warning rounded-pill px-4 fw-bold shadow-sm">
+                    ยืนยันการสั่งซื้อ <i class="fa-solid fa-check ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="thankYouModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 25px;">
+            <div class="modal-body p-5 text-center">
+                <div class="mb-4">
+                    <i class="fa-solid fa-circle-check text-success" style="font-size: 5rem;"></i>
+                </div>
+                <h2 class="fw-bold mb-3">ชำระเงินสำเร็จ!</h2>
+                <p class="text-muted mb-4">ขอบคุณที่เลือกซื้อสินค้ากับ Online Computer Store<br>เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว</p>
+                <button type="button" class="btn btn-warning rounded-pill px-5 fw-bold shadow-sm" data-bs-dismiss="modal">
+                    ตกลง
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="productDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 25px; overflow: hidden;">
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-md-6 bg-light d-flex align-items-center justify-content-center p-4">
+                        <img id="detail-img" src="" class="img-fluid rounded-4 shadow-sm" alt="Product Image">
+                    </div>
+                    <div class="col-md-6 p-5 d-flex flex-column justify-content-center">
+                        <button type="button" class="btn-close position-absolute top-0 end-0 m-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h6 class="text-warning fw-bold mb-2">รายละเอียดสินค้า</h6>
+                        <h3 id="detail-name" class="fw-bold mb-3">ชื่อสินค้า</h3>
+                        <h2 id="detail-price" class="text-dark fw-bold mb-4" style="color: var(--primary-color) !important;">฿0</h2>
+                        
+                        <div class="mb-4">
+                            <h6 class="fw-bold"><i class="fa-solid fa-list-check me-2"></i>ข้อมูลทางเทคนิค:</h6>
+                            <p id="detail-desc" class="text-muted small lh-lg"></p>
+                            <hr class="my-4">
+                            <div class="product-reviews">
+                                <hr class="my-4">
+                                <div class="product-reviews">
+                                    <h6 class="fw-bold mb-3"><i class="fa-solid fa-star text-warning me-2"></i>รีวิวสินค้าจากผู้ซื้อ</h6>
+                                    
+                                    <div id="review-list" class="mb-4">
+                                        <p class="text-muted small italic">ยังไม่มีรีวิวสำหรับสินค้านี้...</p>
+                                    </div>
+
+                                    <hr class="border-secondary opacity-25">
+
+                                    <div class="mb-3">
+                                        <label class="form-label small text-muted">ให้คะแนนและคอมเมนต์:</label>
+                                        <div class="star-rating fs-4 mb-2">
+                                            <i class="fa-regular fa-star text-warning c-pointer" onclick="setRating(1)"></i>
+                                            <i class="fa-regular fa-star text-warning c-pointer" onclick="setRating(2)"></i>
+                                            <i class="fa-regular fa-star text-warning c-pointer" onclick="setRating(3)"></i>
+                                            <i class="fa-regular fa-star text-warning c-pointer" onclick="setRating(4)"></i>
+                                            <i class="fa-regular fa-star text-warning c-pointer" onclick="setRating(5)"></i>
+                                            <span id="rating-value" class="ms-2 small text-muted">(0/5)</span>
+                                        </div>
+                                        <textarea id="review-comment" class="form-control border-warning-subtle" rows="2" placeholder="กรุณาล็อกอินเพื่อร่วมแสดงความคิดเห็น..." style="border-radius: 12px; font-size: 0.9rem;"></textarea>
+                                    </div>
+
+                                    <button type="button" onclick="submitReview()" class="btn btn-warning btn-sm rounded-pill px-4 shadow-sm fw-bold text-dark mb-4">
+                                        ส่งรีวิวสินค้า
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button id="detail-add-btn" onclick="" class="btn btn-warning py-3 rounded-pill fw-bold text-dark shadow-sm hover-scale">
+                                <i class="fa-solid fa-cart-plus me-2"></i> เพิ่มลงตะกร้าสินค้า
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
